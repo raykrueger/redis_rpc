@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+$:.unshift(File.dirname(__FILE__) + '/../lib')
+require 'redis_rpc'
+require 'redis_rpc/server'
+
+redis = Redis.connect(:url => 'redis://127.0.0.1:6379/9')
+
+class Service
+  def say_hello(msg)
+    p "received #{msg}"
+    "Hello #{msg}"
+  end
+end
+
+RedisRpc::Server.run(Service.new, :redis => redis)

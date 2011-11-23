@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+$:.unshift(File.dirname(__FILE__) + '/../lib')
+require 'redis_rpc'
+
+redis = Redis.connect(:url => 'redis://127.0.0.1:6379/9')
+
+msg = [:say_hello, :world].to_msgpack
+
+redis.rpush 'Service', msg
