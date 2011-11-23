@@ -8,9 +8,12 @@ require 'redis_rpc/server'
 redis = Redis.connect(:url => 'redis://127.0.0.1:6379/9')
 
 class Service
-  def say_hello(msg)
-    p "received #{msg}"
-    "Hello #{msg}"
+  def say_hello
+    "Hello World"
+  end
+
+  def boom
+    raise "BOOM"
   end
 end
 

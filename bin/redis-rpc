@@ -3,9 +3,11 @@
 require 'rubygems'
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require 'redis_rpc'
+require 'redis_rpc/client'
+require 'openssl'
 
 redis = Redis.connect(:url => 'redis://127.0.0.1:6379/9')
 
-msg = [:say_hello, :world].to_msgpack
+client = RedisRpc::Client.new('Service', :redis => redis)
 
-redis.rpush 'Service', msg
+p client.say_hello

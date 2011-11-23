@@ -1,3 +1,5 @@
+require 'redis'
+
 module RedisRpc
   class Server
 
@@ -15,12 +17,23 @@ module RedisRpc
     end
 
     def run
-      while true
+      while true #blpop blocks anyway, so just keep running till we're killed
         requests = Hash[*@redis.blpop(@services.keys, 0)]
 
         requests.each_pair do |name, msg|
-          args = MessagePack.unpack(msg)
-          @services[name].send(*args)
+          request = MessagePack.unpack(msg)
+          request_id = request['request_id']
+          args = request['payload']
+
+          begin
+            result = @services[name].send(*args)
+          rescue => e
+            result = e
+          end
+
+          response = Response.new(result)
+
+          @redis.lpush "#{name}:#{request_id}", response.to_msgpack
         end
       end
     end
