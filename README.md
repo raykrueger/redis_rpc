@@ -7,6 +7,8 @@ Redis RPC is a library for executing remote procedure calls through queues (list
 The main purpose of this is to allow for queueing service requests and allow for downtime of
 internal services.
 
+NOTE: This is a work in progress. I can change whatever I want. Hell, I haven't even written
+tests yet.
 
 ## INSTALLATION
 
@@ -19,7 +21,6 @@ internal services.
     $ git clone git://github.com/raykrueger/redis_rpc.git
     $ cd redis_rpc && gem build redis_rpc.gemspec
     $ gem install redis_rpc-<version>.gem
-
 
 ## USAGE
 
@@ -83,7 +84,6 @@ The best way to get your changes merged back into core is as follows:
 1. Create a thoughtfully named topic branch to contain your change
 1. Hack away
 1. Add tests and make sure everything still passes by running `rake`
-1. Ensure your tests pass in multiple timezones. ie `TZ=utc rake` `TZ=BST rake`
 1. If you are adding new functionality, document it in the README
 1. Do not change the version number, we will do that on our end
 1. If necessary, rebase your commits into logical chunks, without errors
