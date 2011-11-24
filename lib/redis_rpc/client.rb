@@ -1,3 +1,4 @@
+require 'redis_rpc'
 require 'redis'
 
 module RedisRpc
@@ -24,8 +25,8 @@ module RedisRpc
       response = MessagePack.unpack(response[1]) if response
 
       if response
-        if response['exception_class']
-          raise Kernel.const_get(response['exception_class']), response['exception_message']
+        if response['exception_message']
+          raise response['exception_message']
         else
           return response['result']
         end

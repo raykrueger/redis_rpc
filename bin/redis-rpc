@@ -2,7 +2,6 @@
 
 require 'rubygems'
 $:.unshift(File.dirname(__FILE__) + '/../lib')
-require 'redis_rpc'
 require 'redis_rpc/client'
 require 'openssl'
 
@@ -10,4 +9,10 @@ redis = Redis.connect(:url => 'redis://127.0.0.1:6379/9')
 
 client = RedisRpc::Client.new('Service', :redis => redis)
 
-p client.say_hello
+10.times do
+  start = Time.now
+  puts client.say_hello
+  puts Time.now - start
+end
+
+client.boom

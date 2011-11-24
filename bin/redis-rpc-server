@@ -2,7 +2,6 @@
 
 require 'rubygems'
 $:.unshift(File.dirname(__FILE__) + '/../lib')
-require 'redis_rpc'
 require 'redis_rpc/server'
 
 redis = Redis.connect(:url => 'redis://127.0.0.1:6379/9')

@@ -4,6 +4,7 @@ require 'msgpack'
 module RedisRpc
 
   @@random_source = nil
+  @@logger = nil
 
   module Packed
     def to_msgpack
@@ -17,11 +18,10 @@ module RedisRpc
 
   class Response
     include Packed
-    attr_reader :result, :exception_class, :exception_message
+    attr_reader :result, :exception_message
 
     def initialize(result)
       if result.kind_of? Exception
-        @exception_class = result.class.name
         @exception_message = result.to_s
       else
         @result = result
@@ -51,6 +51,17 @@ module RedisRpc
 
   def self.random_id
     self.random_source.random_bytes(32).unpack('H*').first
+  end
+
+  def self.logger=(logger)
+    @@logger = logger
+  end
+  
+  def self.logger
+    unless @@logger
+      @@logger = Logger.new(STDOUT)
+    end
+    @@logger
   end
 
 end

@@ -1,4 +1,6 @@
+require 'redis_rpc'
 require 'redis'
+require 'logger'
 
 module RedisRpc
   class Server
@@ -28,6 +30,7 @@ module RedisRpc
           begin
             result = @services[name].send(*args)
           rescue => e
+            RedisRpc.logger.error(%Q|#{e.message}\n#{e.backtrace.join("\n")}|)
             result = e
           end
 
