@@ -8,7 +8,8 @@ The main purpose of this is to allow for queueing service requests and allow for
 internal services.
 
 NOTE: This is a work in progress. I can change whatever I want. Hell, I haven't even written
-tests yet.
+tests yet. I wrote this in a matter of a few hours just to see what it would look like. I may
+improve it soon, I may never touch it again. We'll see :)
 
 ## INSTALLATION
 
