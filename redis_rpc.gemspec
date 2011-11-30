@@ -16,6 +16,5 @@ Gem::Specification.new do |gem|
   gem.version       = RedisRpc::VERSION
 
   gem.add_dependency "redis", "~> 2.2"
-  gem.add_dependency "redis-namespace", "~> 1.0"
   
 end
