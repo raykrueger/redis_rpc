@@ -16,4 +16,7 @@ class Service
   end
 end
 
-RedisRpc::Server.run(Service.new, :redis => redis)
+n = 0
+RedisRpc::Server.run_while(Service.new, :redis => redis, :block_wait => 5) do
+  true
+end

@@ -16,33 +16,38 @@ module RedisRpc
         @services[service.class.name] = service
       end
       @redis = options[:redis] || Redis.connect
+      @block_wait = options[:block_wait] || 5
     end
 
-    def run
-      while true #blpop blocks anyway, so just keep running till we're killed
-        requests = Hash[*@redis.blpop(@services.keys, 0)]
+    def run(&block)
+      while (block_given? ? block.call : true)
+        requests = @redis.blpop(@services.keys, @block_wait)
 
-        requests.each_pair do |name, msg|
-          request = MessagePack.unpack(msg)
-          request_id = request['request_id']
-          args = request['payload']
+        if requests
+          requests = Hash[*requests]
+          requests.each_pair do |name, msg|
+            request = MessagePack.unpack(msg)
+            request_id = request['request_id']
+            args = request['payload']
 
-          begin
-            result = @services[name].send(*args)
-          rescue => e
-            RedisRpc.logger.error(%Q|#{e.message}\n#{e.backtrace.join("\n")}|)
-            result = e
+            begin
+              result = @services[name].send(*args)
+            rescue => e
+              RedisRpc.logger.error(%Q|#{e.message}\n#{e.backtrace.join("\n")}|)
+              result = e
+            end
+
+            response = Response.new(result)
+
+            @redis.lpush "#{name}:#{request_id}", response.to_msgpack
           end
-
-          response = Response.new(result)
-
-          @redis.lpush "#{name}:#{request_id}", response.to_msgpack
         end
+
       end
     end
-    
-    def self.run(*args)
-      new(*args).run
+
+    def self.run_while(*args, &block)
+      new(*args).run(&block)
     end
 
   end
