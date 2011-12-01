@@ -1,5 +1,6 @@
 require 'redis_rpc'
 require 'redis'
+require 'timeout'
 
 module RedisRpc
   class Client
@@ -30,6 +31,8 @@ module RedisRpc
         else
           return response['result']
         end
+      else
+        raise Timeout::Error
       end
     end
 
