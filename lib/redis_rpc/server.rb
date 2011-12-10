@@ -20,6 +20,7 @@ module RedisRpc
     end
 
     def run(&block)
+      RedisRpc.logger.info "RedisRpc listening to #{@services.keys.join(', ')}"
       while (block_given? ? block.call : true)
         requests = @redis.blpop(@services.keys, @block_wait)
 

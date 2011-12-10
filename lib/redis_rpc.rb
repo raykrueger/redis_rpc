@@ -60,6 +60,7 @@ module RedisRpc
   def self.logger
     unless @@logger
       @@logger = Logger.new(STDOUT)
+      STDOUT.sync = true
     end
     @@logger
   end
