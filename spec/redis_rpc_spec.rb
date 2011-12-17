@@ -21,8 +21,6 @@ describe RedisRpc do
       o.last_name = "Krueger"
       packed = o.to_msgpack
 
-      packed.must_equal "\202\251last_name\247Krueger\252first_name\243Ray" 
-
       unpacked = MessagePack.unpack(packed)
       unpacked["first_name"].must_equal o.first_name
       unpacked["last_name"].must_equal o.last_name
