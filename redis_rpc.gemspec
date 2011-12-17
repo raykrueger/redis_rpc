@@ -15,6 +15,9 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = RedisRpc::VERSION
 
-  gem.add_dependency "redis", "~> 2.2"
+  gem.add_dependency "redis", "~> 2.2.2"
+  gem.add_dependency "msgpack", "~> 0.4.6"
+
+  gem.add_development_dependency "minitest"
   
 end

@@ -1,5 +1,6 @@
 require "redis_rpc/version"
 require 'msgpack'
+require 'logger'
 
 module RedisRpc
 
@@ -27,7 +28,6 @@ module RedisRpc
         @result = result
       end
     end
-
   end
 
   def self.random_source
