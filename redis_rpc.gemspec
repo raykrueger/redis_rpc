@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/redis_rpc/version', __FILE__)
+require 'lib/redis_rpc/version'
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Ray Krueger"]
