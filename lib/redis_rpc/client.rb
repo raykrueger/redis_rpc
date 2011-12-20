@@ -20,8 +20,11 @@ module RedisRpc
       response_key = "#{@service_name}:#{request_id}"
 
       @redis.rpush(@service_name, request.to_msgpack)
-      response = @redis.blpop(response_key, @timeout)
-      @redis.del(response_key)
+      begin
+        response = @redis.blpop(response_key, @timeout)
+      ensure
+        @redis.del(response_key)
+      end
 
       response = MessagePack.unpack(response[1]) if response
 
