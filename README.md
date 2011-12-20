@@ -7,9 +7,7 @@ Redis RPC is a library for executing remote procedure calls through queues (list
 The main purpose of this is to allow for queueing service requests and allow for downtime of
 internal services.
 
-NOTE: This is a work in progress. I can change whatever I want. Hell, I haven't even written
-tests yet. I wrote this in a matter of a few hours just to see what it would look like. I may
-improve it soon, I may never touch it again. We'll see :)
+This is a work in progress. I can change whatever I want still.
 
 ## INSTALLATION
 
